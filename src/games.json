@@ -1,0 +1,32 @@
+[
+    {
+        "nome": "The Witcher 3",
+        "ano": 2015,
+        "genero": "RPG",
+        "nota": 5
+    },
+    {
+        "nome": "Dark Souls",
+        "ano": 2011,
+        "genero": "Action",
+        "nota": 4
+    },
+    {
+        "nome": "Cyberpunk 2077",
+        "ano": 2020,
+        "genero": "RPG",
+        "nota": 3
+    },
+    {
+        "nome": "Halo Infinite",
+        "ano": 2021,
+        "genero": "FPS",
+        "nota": 4
+    },
+    {
+        "nome": "Stardew Valley",
+        "ano": 2016,
+        "genero": "Simulation",
+        "nota": 5
+    }
+]
