@@ -3,64 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Busca de Jogos</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Buscar Jogos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        select, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .jogo {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        img {
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
+
+    <header>
+        <h1>Buscar Jogos Top 5</h1>
+    </header>
+
     <div class="container">
-        <h1>Busca de Jogos</h1>
+        <label for="categoria">Selecione a categoria:</label>
+        <select id="categoria">
+            <option value="action">Ação</option>
+            <option value="adventure">Aventura</option>
+            <option value="rpg">RPG</option>
+            <option value="strategy">Estratégia</option>
+        </select>
 
-        <!-- Botões para escolher o tipo de pesquisa -->
-        <div id="opcoes-pesquisa">
-            <button onclick="mostrarCampoPesquisa('nome')">Pesquisar por Nome</button>
-            <button onclick="mostrarCampoPesquisa('ano')">Pesquisar por Ano</button>
-        </div>
+        <button onclick="buscarTop5Categoria()">Buscar</button>
 
-        <!-- Campos de entrada escondidos inicialmente -->
-        <div id="campo-nome" style="display: none;">
-            <label for="nome">Nome do Jogo:</label>
-            <input type="text" id="nome" placeholder="Ex: The Witcher 3">
-        </div>
-
-        <div id="campo-ano" style="display: none;">
-            <label for="ano">Ano de Lançamento:</label>
-            <input type="number" id="ano" placeholder="Ex: 2020">
-        </div>
-
-        <!-- Botão de busca escondido inicialmente -->
-        <button id="botao-buscar" style="display: none;" onclick="buscarJogo()">Buscar Jogo</button>
-
-        <!-- Resultado da busca -->
         <div id="resultado"></div>
     </div>
 
     <script>
-        function mostrarCampoPesquisa(tipo) {
-            document.getElementById('campo-nome').style.display = 'none';
-            document.getElementById('campo-ano').style.display = 'none';
-            document.getElementById('botao-buscar').style.display = 'none';
-
-            if (tipo === 'nome') {
-                document.getElementById('campo-nome').style.display = 'block';
-            } else if (tipo === 'ano') {
-                document.getElementById('campo-ano').style.display = 'block';
-            }
-
-            document.getElementById('botao-buscar').style.display = 'block';
-        }
-
-        function buscarJogo() {
-            const nome = document.getElementById('nome').value || null;
-            const ano = document.getElementById('ano').value || null;
-
-            if (!nome && !ano) {
-                alert('Por favor, preencha pelo menos um campo de pesquisa.');
-                return;
-            }
-
-            document.getElementById('resultado').innerHTML = "<p>Carregando...</p>";  // Exibe carregando enquanto espera os resultados
-
-            window.pywebview.api.buscar_jogo(nome, ano).then(jogos => {
+        function buscarTop5Categoria() {
+            var categoria = document.getElementById('categoria').value;
+            document.getElementById('resultado').innerHTML = "<p>Carregando...</p>";
+            window.pywebview.api.buscar_top_5_por_categoria(categoria).then(jogos => {
                 const resultadoDiv = document.getElementById('resultado');
                 resultadoDiv.innerHTML = '';
 
@@ -68,12 +76,12 @@
                     resultadoDiv.innerHTML = `<p>${jogos.error}</p>`;
                 } else {
                     jogos.forEach(jogo => {
-                        const imagemUrl = jogo.background_image || 'imagem-default.jpg';  // Caso não tenha imagem, exibe uma padrão
+                        const imagemUrl = jogo.background_image || 'imagem-default.jpg';
 
                         resultadoDiv.innerHTML += `
                             <div class="jogo">
                                 <h2>${jogo.name}</h2>
-                                <img src="${imagemUrl}" alt="Imagem do jogo ${jogo.name}" style="width: 100%; max-width: 400px; margin-bottom: 15px;">
+                                <img src="${imagemUrl}" alt="Imagem do jogo ${jogo.name}">
                                 <p>Ano de Lançamento: ${jogo.released}</p>
                                 <p>Plataformas: ${jogo.platforms.map(p => p.platform.name).join(', ')}</p>
                                 <p>Avaliação: ${jogo.rating}</p>
@@ -85,5 +93,6 @@
             });
         }
     </script>
+
 </body>
 </html>
