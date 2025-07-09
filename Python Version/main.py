@@ -2,7 +2,7 @@ import webview
 import requests
 import urllib.parse
 
-API_KEY = '84612886449a4440a525cfd76e234014'  # Chave da API configurada uma vez
+API_KEY = 'SUA_CHAVE'
 
 
 def buscar_jogo(nome, ano):
