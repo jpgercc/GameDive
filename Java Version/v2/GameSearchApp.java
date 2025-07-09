@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class GameSearchApp {
 
-    private static final String API_KEY = "5586cb616813455a88ee39f7f2a12e24";  // Substitua pela sua chave de API
+    private static final String API_KEY = "SUA_CHAVE";  // Substitua pela sua chave de API
 
     public static void main(String[] args) {
         System.out.println("O que você deseja pesquisar?");
